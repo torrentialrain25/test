@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文字冒险游戏</title>
+  <style>
+    body { font-family: 'Arial', sans-serif; background-color: #f0f0f0; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; background-color: white; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); }
+    .text-box { margin-bottom: 20px; padding: 20px; background-color: #f9f9f9; border-radius: 5px; }
+    .choices { margin-top: 20px; }
+    .choice-button { display: block; margin: 10px 0; padding: 10px; width: 100%; background-color: #4CAF50; color: white; text-align: center; border: none; border-radius: 5px; cursor: pointer; }
+    .choice-button:hover { background-color: #45a049; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div id="story" class="text-box">
+      <p>睁开眼睛的时候，面前是一片洁白。</p >
+    </div>
+    
+    <div id="choices" class="choices">
+      <button class="choice-button" onclick="nextScene(1)">有人吗？</button>
+    </div>
+  </div>
+
+  <script>
+    let currentScene = 0;
+
+    function nextScene(choice) {
+      if (currentScene === 0) {
+        if (choice === 1) {
+          document.getElementById('story').innerHTML = `
+            <p>一头蓝发的人出现在眼前，但是对他的模样没有任何印象。</p >
+            <p>有点乱的短发、整洁的西装、甚至有些轻浮的眼型。</p >
+            <p>我和他一定相当合不来，更不用说成为朋友了。</p >
+            <p>这个人突然开口，似乎也同样困惑。</p >
+            <p>“……加百列？为什么你在这里？”</p >
+          `;
+          updateChoices([
+            { text: "你是谁？", action: 2 },
+            { text: "这里是哪里？", action: 3 }
+          ]);
+          currentScene = 1;
+        }
+      } else if (currentScene === 1) {
+        if (choice === 2 || choice === 3) {
+          document.getElementById('story').innerHTML = `
+            <p>“哎呀，是失忆？还是你真的讨厌我到这种程度。”</p >
+            <p>对面的人显得十分失落，气氛也一下子有些尴尬。</p >
+            <p>如果见过的话，一定是记得的人。</p >
+            <p>我低头看了看自己的衣装——沾着化学试剂斑点的白大褂，裹着因为水洗而有些勒脖子的高领毛衣。</p >
+            <p>嗯，再看看这人的西装的话，我们一定没有见过。</p >
+            <p>即使见过，也不该是认识或者那以上的关系。</p >
+          `;
+          updateChoices([
+            { text: "你也不知道这里是哪里吗？", action: 4 }
+          ]);
+          currentScene = 2;
+        }
+      } else if (currentScene === 2) {
+        if (choice === 4) {
+          document.getElementById('story').innerHTML = `
+            <p>“是啊，我还希望能让什么都知道的加百列告诉我呢。”</p >
+            <p>这个人真是奇怪，总是一种称赞的语气说出平常的事情。</p >
+            <p>如果和这个人成为同事……未免也太可怕。</p >
+            <p>“不过真是没想到，还能再遇见你，简直和做梦一样。”</p >
+            <p>“做梦？你在说什么。”我终于忍不住脱口而出，这个奇怪的人从刚才开始就一直自说自话。</p >
+            <p>但他说话的语气又是那么温和，这种情况下，但凡冒失一些，都像是自己在欺负人。</p >
+          `;
+          updateChoices([
+            { text: "嗯，当然记得", action: 7 },
+            { text: "我还是不知道你的名字", action: 8 }
+          ]);
+          currentScene = 3;
+        }
+      } else if (currentScene === 3) {
+        if (choice === 7) {
+          document.getElementById('story').innerHTML = `
+            <p>真是说谎，蓝色头发的人悲恸地望着自己，本来是面对面的距离，什么时候连他的表情也看不清楚了？不过丹尼尔，这才是你心里想的不是吗？明明是自己追求的答案，却不期待实现，真是奇怪的人。</p >
+          `;
+          endGame();
+        } else if (choice === 8) {
+          document.getElementById('story').innerHTML = `
+            <p>“我叫丹尼尔。”</p >
+            <p>话还没有说出口，那人就先一步回答，像是这句话从一开始就停留在舌根。</p >
+            <p>“不管怎样，以后我们还有更多可以认识的时刻。”</p >
+          `;
+          updateChoices([
+            { text: "初次见面，丹尼尔。", action: 9 },
+            { text: "我们可能会很合不来。", action: 10 }
+          ]);
+          currentScene = 4;
+        }
+      } else if (currentScene === 4) {
+        if (choice === 9 || choice === 10) {
+          document.getElementById('story').innerHTML = `
+            <p>丹尼尔嗤嗤地笑起来，又是这样一副，仿佛做了什么都在他意料中的表情。而我却对他一无所知，这样奇怪的违和感也在他的设想里吗？</p >
+            <p>这时，空间突然开始摇晃，从顶部开始坍塌，洁白的空间因为落下的碎片而意识到了空间的有限，缺损的空间一角里，隐约看到了实验室一样的另一个空间，如平面展开，包裹住洁白空间一般。</p >
+            <p>最大的一块白色碎片直直坠下，而丹尼尔站在那里。</p >
+          `;
+          updateChoices([
+            { text: "什么也不做", action: 11 },
+            { text: "推开他", action: 12 }
+          ]);
+          currentScene = 5;
+        }
+      } else if (currentScene === 5) {
+        if (choice === 11) {
+          document.getElementById('story').innerHTML = `
+            <p>丹尼尔仿佛是早早预料到，露出了见面来最灿烂的微笑，白色碎片落下时仿佛橡皮擦一般擦掉他的存在。什么也没有做的我，随着坠落失去意识。</p >
+          `;
+          endGame();
+        } else if (choice === 12) {
+          document.getElementById('story').innerHTML = `
+            <p>至少不希望再发生这样的事，至少可以挽回什么。我冲上前，用尽全身力量将他推开，双手第一次接触到他身体的瞬间，眼前透过白色碎片坠落的间隙看清，站在面前的是紫色头发、白大褂、裹着因为水洗而有些勒脖子的高领毛衣的加百列，不是因为伤痕而认不清的加百列，不是永远只是阴着脸擦肩而过的加百列。</p >
+            <p>第一次见面时还没褪掉学院气的，有点吝于开口的加百列震惊地看着自己。</p >
+            <p>而这样的表情，也是丹尼尔所想到过的。</p>
+
+          `;
+          endGame();
+        }
+      }
+    }
+
+    function updateChoices(choices) {
+      const choicesDiv = document.getElementById('choices');
+      choicesDiv.innerHTML = '';
+      choices.forEach(choice => {
+        const button = document.createElement('button');
+        button.classList.add('choice-button');
+        button.textContent = choice.text;
+        button.onclick = () => nextScene(choice.action);
+        choicesDiv.appendChild(button);
+      });
+    }
+
+    function endGame() {
+      const choicesDiv = document.getElementById('choices');
+      choicesDiv.innerHTML = `<button class="choice-button" onclick="location.reload()">重新开始</button>`;
+    }
+  </script>
+
+</body>
+</html>
